@@ -48,3 +48,101 @@
 
 # render函数的调用
 
+- 所有组件被创建的时候都会被调用一次
+- setState时render调用
+
+### SCU优化
+
+shouldComponentUpdate（）生命周期控制render函数调用与否
+
+```js
+ shouldComponentUpdate(nextProps, nextState, nextContext) {
+    if(nextState.counter !== this.state.counter){
+      return true
+    }
+    return false
+  }
+```
+
+
+
+当setState更改一些无关紧要的数据时（在页面上无显示）也会触发render函数
+
+通过SCU优化来控制render的调用
+
+demo 只有在counter改变的时候才会调用render
+
+```js
+import React, {Component} from 'react';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      message:'hello',
+      counter:0
+    }
+  }
+
+
+
+  render() {
+    console.log('render')
+    return (
+        <div>
+          <h2>{this.state.counter}</h2>
+          <button onClick={e => this.btnClick()}>+1</button>
+          <button onClick={e => this.changeMessage()}>change</button>
+        </div>
+    );
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    if(nextState.counter !== this.state.counter){
+      return true
+    }
+    return false
+  }
+
+  btnClick(){
+    this.setState({
+      counter:this.state.counter+1
+    })
+  }
+  changeMessage(){
+    this.setState({
+      message:'11111'
+    })
+  }
+}
+
+export default App;
+
+```
+
+### PureComponent
+
+在SCU优化的时候如果数据量太大，比较过于麻烦，类组件可以直接继承PureComponent，当state发生改变的时候，会对state进行浅层比较来防止render函数的过多调用。
+
+##### 缺陷：无法阻止函数组件的render调用
+
+## memo 的使用
+
+- 使用
+
+  ```js
+  import {memo} from 'react'
+  
+  const memoHeader = memo(function Header(){
+      return(
+          <div>我头</div>
+      )
+  })
+  
+  <memoHeader/>
+  ```
+
+  
+
+这样react也会对这个函数组件进行state优化，没有修改时不会调用他的render函数
