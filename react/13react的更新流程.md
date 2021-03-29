@@ -1,6 +1,6 @@
 # 渲染流程和更新流程图
 
-![image-20210216222041313](D:\project\notebook\react\13react的更新流程.assets\image-20210216222041313.png)
+![image-20210216222041313](.\13react的更新流程.assets\image-20210216222041313.png)
 
 # diff算法的要点
 
@@ -30,11 +30,11 @@
 
 - 默认情况是依次遍历，如果是前面全部一样，最后一条有变化，则复制变化插入原来的dom
 
-  ![image-20210216223108437](D:\project\notebook\react\13react的更新流程.assets\image-20210216223108437.png)
+  ![image-20210216223108437](.\13react的更新流程.assets\image-20210216223108437.png)
 
 - 如果是在最前面插入一条数据，则会对每一个子dom发生更改不会复用，产生性能问题，所以引入keys优化
 
-  ![image-20210216223157810](D:\project\notebook\react\13react的更新流程.assets\image-20210216223157810.png)
+  ![image-20210216223157810](.\13react的更新流程.assets\image-20210216223157810.png)
 
 #### keys的优化
 
