@@ -1,3 +1,23 @@
+`computed` 是计算一个新的属性，并将该属性挂载到 vm（Vue 实例）上，而 `watch` 是监听已经存在且已挂载到 `vm` 上的数据，所以用 `watch` 同样可以监听 `computed` 计算属性的变化（其它还有 `data`、`props`）
+
+`computed` 本质是一个**惰性求值的观察者**，具有缓存性，**只有当依赖变化后，第一次访问  `computed`  属性，才会计算新的值**，而 `watch` 则是当数据发生变化便会调用执行函数（ps:<span style="color:red">就是当依赖变化时，computed函数并不执行，当取这个computed的时候才执行，而watch会立即执行</span>）
+
+computed支持缓存，有一个dirty属性 只有当依赖变化的时候，触发依赖的set 把computed的watcher设置为true 这是返回值会重新执行computed再进行返回。
+
+从使用场景上说，**`computed` 适用一个数据被多个数据影响，而 `watch` 适用一个数据影响多个数据；**
+
+**watch 支持异步操作**
+
+
+
+# computed原理
+
+computed内部实现了一个惰性的watcher，在实例化的时候不会去求值，其内部通过dirty属性标记计算属性是否需要重新求值。当computed依赖的任一状态（不一定是return中的）发生变化，都会通知这个惰性watcher，让它把dirty属性设置为true。所以，当再次读取这个计算属性的时候，就会重新去求值。
+
+
+
+
+
 **计算属性computed :** 
 
 \1. 支持缓存，只有依赖数据发生改变，才会重新进行计算
