@@ -10,7 +10,7 @@ computed支持缓存，有一个dirty属性 只有当依赖变化的时候，触
 
 
 
-# computed原理
+# 1computed原理
 
 computed内部实现了一个惰性的watcher，在实例化的时候不会去求值，其内部通过dirty属性标记计算属性是否需要重新求值。当computed依赖的任一状态（不一定是return中的）发生变化，都会通知这个惰性watcher，让它把dirty属性设置为true。所以，当再次读取这个计算属性的时候，就会重新去求值。
 

@@ -34,6 +34,15 @@
 - 可以额外设置 `title` 属性，以便后续使用。
 - 通过 `pushState` 、 `replaceState` 来实现无刷新跳转的功能。
 
+### 解决刷新404 的问题例如nginx
+
+设置
+
+```nginx
+try_files $uri /index.html;
+
+```
+
 
 
 # 路由传参
